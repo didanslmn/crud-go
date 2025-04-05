@@ -1,16 +1,29 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/didanslmn/crud-go/database"
-	"github.com/didanslmn/crud-go/routes"
+	"github.com/didanslmn/crud-go/handler"
 )
 
 func main() {
-	db := database.InitDatabase()
-	server := http.NewServeMux()
-	routes.MapRoutes(server, db)
+	// Initialize database
+	db, err := database.InitDB()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
 
-	http.ListenAndServe(":8080", server)
+	// Setup routes
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, "/employees", http.StatusSeeOther)
+	})
+
+	http.HandleFunc("/employees", handler.IndexHandler(db))
+
+	// Start server
+	log.Println("Server running on :8080")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
