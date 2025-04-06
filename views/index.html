@@ -18,7 +18,6 @@
             <td>{{ .Nama }}</td>
             <td>{{ .NPWP }}</td>
             <td>
-                <a href="/employees/{{ .ID }}" class="btn btn-sm btn-info">View</a>
                 <a href="/employees/edit/{{ .ID }}" class="btn btn-sm btn-warning">Edit</a>
                 <form action="/employees/delete/{{ .ID }}" method="POST" style="display:inline">
                     <button type="submit" class="btn btn-sm btn-danger" 

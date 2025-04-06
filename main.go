@@ -6,24 +6,33 @@ import (
 
 	"github.com/didanslmn/crud-go/database"
 	"github.com/didanslmn/crud-go/handler"
+	"github.com/go-chi/chi/v5"
 )
 
 func main() {
-	// Initialize database
+	// initial database
 	db, err := database.InitDB()
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer db.Close()
 
-	// Setup routes
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	// routing
+	r := chi.NewRouter()
+
+	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/employees", http.StatusSeeOther)
 	})
 
-	http.HandleFunc("/employees", handler.IndexHandler(db))
+	r.Get("/employees", handler.IndexHandler(db))
+	r.Get("/employees/create", handler.CreateHandler(db))
+	r.Post("/employees/create", handler.CreateHandler(db))
 
-	// Start server
+	r.Get("/employees/edit/{id}", handler.EditHandler(db))
+	r.Post("/employees/edit/{id}", handler.EditHandler(db))
+
+	r.Post("/employees/delete/{id}", handler.DeleteHandler(db))
+
 	log.Println("Server running on :8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8080", r))
 }

@@ -1,0 +1,21 @@
+{{ define "content" }}
+<h3>Update Karyawan</h3>
+<form action="/employees/edit/{{ .ID }}" method="POST">
+    <div class="mb-3 mt-5">
+        <label for="nama" class="form-label">Nama Karyawan</label>
+        <input type="text" id="nama" name="nama" class="form-control" value="{{.Nama}}" required />
+    </div>
+    <div class="mb-3">
+        <label for="npwp" class="form-label">NPWP</label>
+        <input type="text" id="npwp" name="npwp" class="form-control" value="{{.NPWP}}" required/>
+    </div>
+    <div class="mb-3">
+        <label for="address" class="form-label">Address</label>
+        <textarea id="address" name="address" class="form-control" required>{{.Address}}</textarea>
+    </div>
+    <div class="d-flex justify-content-between"></div>
+        <button type="submit" class="btn btn-primary btn-sm">Create</button>
+        <a href="/employees" class="btn btn-outline-secondary">Cancel</a>
+    </div>
+ </form>
+{{ end }}  
