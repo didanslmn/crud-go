@@ -13,7 +13,7 @@ func InitDB() (*sql.DB, error) {
 	if err != nil {
 		return nil, fmt.Errorf("error opening database %w", err)
 	}
-	// tes connection
+	// tes apakah connection ke database berhasil
 	if err = db.Ping(); err != nil {
 		return nil, fmt.Errorf("error connecting to database %w", err)
 	}
