@@ -26,6 +26,7 @@ git clone https://github.com/username/crud-go.git
 cd crud-go
 ```
 2. Setup databse
+``` bash
 CREATE DATABASE crud_go;
 USE crud_go;
 
@@ -35,7 +36,7 @@ CREATE TABLE employee (
     npwp VARCHAR(255) NOT NULL,
     address TEXT NOT NULL
 );
-
+```
 # Jalankan server di port 8080
 go run main.go
 
